@@ -3,6 +3,9 @@
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Ipv4Client {
 
@@ -10,9 +13,22 @@ public class Ipv4Client {
         try (Socket socket = new Socket("18.221.102.182", 38003)) {
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
+			InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+			BufferedReader br = new BufferedReader(isr);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Connected to server.");
+            String address = socket.getInetAddress().getHostAddress();
+
+            byte packet[] = new byte[20];
+            for (int field = 1; field < 13; field++) {
+	        	int ipVersion = 4;
+				int HL = 5;
+				int TOS = 0;
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
